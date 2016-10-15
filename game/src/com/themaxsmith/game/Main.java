@@ -4,6 +4,10 @@ package com.themaxsmith.game;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
@@ -16,7 +20,13 @@ public class Main extends Canvas implements Runnable {
 	public static Thread thread;
 	private boolean running = false;
 	public static final String NAME = "2D Game Engine";
+	private TextureHandler textHandler;
+	private Screen screen;
+	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+ 
 	public static final Dimension DIMENSIONS = new Dimension(WIDTH * SCALE,HEIGHT * SCALE);
+
 	private static Main game = new Main();
 	public static void main(String[] args){
 		
@@ -25,7 +35,7 @@ public class Main extends Canvas implements Runnable {
 		game.setPreferredSize(Main.DIMENSIONS);
 
 		frame = new JFrame(Main.NAME);
-
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 
@@ -54,7 +64,7 @@ public class Main extends Canvas implements Runnable {
 		long lastTimer = System.currentTimeMillis();
 		double delta = 0;
 		
-		
+		init();
 		while(running){
 			long now = System.nanoTime();
 			delta += (now - lastTime) / nsPerTick;
@@ -91,9 +101,30 @@ public class Main extends Canvas implements Runnable {
 		}
 		
 	}
+	private void init() {
+	 textHandler = new TextureHandler();
+	 screen = new Screen(WIDTH, HEIGHT);
+	
+	}
 	private void render() {
-		// TODO Auto-generated method stub
-		
+	 BufferStrategy bs = getBufferStrategy();
+	 if (bs == null){
+		createBufferStrategy(3);
+	 return;
+	 }
+	 screen.render(10, 10, textHandler.getTexture("max.jpg"));
+	 for(int y = 0; y < screen.getHeight(); y++){
+		 for(int x = 0; x < screen.getWidth(); x++){
+			pixels[x+y * WIDTH] = screen.pixels[x + y * WIDTH];
+			 
+			 
+		 } 
+		 
+	 }
+	 Graphics g = bs.getDrawGraphics();
+	 g.drawImage(image, 0, 0, getWidth(),getHeight(),null);
+	g.dispose();
+	 bs.show();
 	}
 	private void tick() {
 	
