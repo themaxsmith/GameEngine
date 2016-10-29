@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class Scene {
+public abstract class Scene {
 	private ArrayList<Object> objects = new ArrayList<Object>();
 
 	public void render(Screen screen) {
@@ -31,6 +31,6 @@ public class Scene {
 			objects.remove(object);
 		}
 	}
-
+	public abstract KeyListener setKeyListener();
 
 }

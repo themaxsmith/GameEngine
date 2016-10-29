@@ -11,11 +11,12 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-public class Main extends Canvas implements Runnable {
+public abstract class GameEngine extends Canvas implements Runnable {
 	public static JFrame frame;
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = WIDTH / 12 * 9;
+
 	public static final int SCALE = 1;
 	public static Thread thread;
 	private boolean running = false;
@@ -28,14 +29,12 @@ public class Main extends Canvas implements Runnable {
  
 	public static final Dimension DIMENSIONS = new Dimension(WIDTH * SCALE,HEIGHT * SCALE);
 
-	private static Main game = new Main();
-	public static void main(String[] args){
-		
-		game.setMinimumSize(Main.DIMENSIONS);
-		game.setMaximumSize(Main.DIMENSIONS);
-		game.setPreferredSize(Main.DIMENSIONS);
+	public static void startThread(GameEngine game){
+		game.setMinimumSize(GameEngine.DIMENSIONS);
+		game.setMaximumSize(GameEngine.DIMENSIONS);
+		game.setPreferredSize(GameEngine.DIMENSIONS);
 
-		frame = new JFrame(Main.NAME);
+		frame = new JFrame(GameEngine.NAME);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
@@ -47,8 +46,9 @@ public class Main extends Canvas implements Runnable {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		game.start();
- 
+		
 	}
+	
 	public synchronized void start(){
 		running = true;
 		thread= new Thread(this, NAME+"_main");
@@ -65,7 +65,7 @@ public class Main extends Canvas implements Runnable {
 		long lastTimer = System.currentTimeMillis();
 		double delta = 0;
 		
-		init();
+		initGE();
 		while(running){
 			long now = System.nanoTime();
 			delta += (now - lastTime) / nsPerTick;
@@ -102,15 +102,14 @@ public class Main extends Canvas implements Runnable {
 		}
 		
 	}
-	private void init() {
+	private void initGE() {
 	 textHandler = new TextureHandler();
 	 screen = new Screen(WIDTH, HEIGHT);
 	 sceneHand = new SceneHandler(this);
-	 Scene scene = new Scene();
-	 scene.addObject(new Image("max.jpg", 10, 10));
-	 sceneHand.setScene( scene);
-	
+
+	 init();
 	}
+ public abstract void init();
 	private void render() {
 	 BufferStrategy bs = getBufferStrategy();
 	 if (bs == null){
@@ -134,5 +133,66 @@ public class Main extends Canvas implements Runnable {
 	private void tick() {
 	
 		
+	}
+	
+	public static JFrame getFrame() {
+		return frame;
+	}
+	public static void setFrame(JFrame frame) {
+		GameEngine.frame = frame;
+	}
+	public static Thread getThread() {
+		return thread;
+	}
+	public static void setThread(Thread thread) {
+		GameEngine.thread = thread;
+	}
+	public boolean isRunning() {
+		return running;
+	}
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+	public TextureHandler getTextHandler() {
+		return textHandler;
+	}
+	public void setTextHandler(TextureHandler textHandler) {
+		this.textHandler = textHandler;
+	}
+	public Screen getScreen() {
+		return screen;
+	}
+	public void setScreen(Screen screen) {
+		this.screen = screen;
+	}
+	public SceneHandler getSceneHand() {
+		return sceneHand;
+	}
+	public void setSceneHand(SceneHandler sceneHand) {
+		this.sceneHand = sceneHand;
+	}
+	public BufferedImage getImage() {
+		return image;
+	}
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+	public int[] getPixels() {
+		return pixels;
+	}
+	public void setPixels(int[] pixels) {
+		this.pixels = pixels;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public static int getScale() {
+		return SCALE;
+	}
+
+	public static Dimension getDimensions() {
+		return DIMENSIONS;
 	}
 }
