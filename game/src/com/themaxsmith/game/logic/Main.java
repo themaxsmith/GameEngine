@@ -1,4 +1,4 @@
-package com.themaxsmith.game;
+package com.themaxsmith.game.logic;
 
 
 import java.awt.BorderLayout;
@@ -22,6 +22,7 @@ public class Main extends Canvas implements Runnable {
 	public static final String NAME = "2D Game Engine";
 	private TextureHandler textHandler;
 	private Screen screen;
+	private SceneHandler sceneHand;
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
  
@@ -104,6 +105,10 @@ public class Main extends Canvas implements Runnable {
 	private void init() {
 	 textHandler = new TextureHandler();
 	 screen = new Screen(WIDTH, HEIGHT);
+	 sceneHand = new SceneHandler(this);
+	 Scene scene = new Scene();
+	 scene.addObject(new Image("max.jpg", 10, 10));
+	 sceneHand.setScene( scene);
 	
 	}
 	private void render() {
@@ -112,7 +117,7 @@ public class Main extends Canvas implements Runnable {
 		createBufferStrategy(3);
 	 return;
 	 }
-	 screen.render(10, 10, textHandler.getTexture("max.jpg"));
+	sceneHand.render(screen);
 	 for(int y = 0; y < screen.getHeight(); y++){
 		 for(int x = 0; x < screen.getWidth(); x++){
 			pixels[x+y * WIDTH] = screen.pixels[x + y * WIDTH];

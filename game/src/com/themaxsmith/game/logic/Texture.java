@@ -1,4 +1,4 @@
-package com.themaxsmith.game;
+package com.themaxsmith.game.logic;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

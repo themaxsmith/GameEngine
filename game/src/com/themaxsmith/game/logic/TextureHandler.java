@@ -1,11 +1,11 @@
-package com.themaxsmith.game;
+package com.themaxsmith.game.logic;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TextureHandler {
-private Map<String,Texture> textures = new HashMap<String, Texture>();
+private static Map<String,Texture> textures = new HashMap<String, Texture>();
 public TextureHandler(){
 File x = new File("Images");
 if (x.exists()){
@@ -25,7 +25,7 @@ if (x.exists()){
 }
 }
 
-public Texture getTexture(String path){
+public static Texture getTexture(String path){
 	return textures.get(path);
 	
 }
