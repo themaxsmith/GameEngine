@@ -21,7 +21,18 @@ public class Player extends Object {
 		
 	}
 	public void onKey(KeyEvent e){
-		System.out.println(e.getKeyChar());
+		if (e.getKeyCode() == KeyEvent.VK_UP){
+			y--;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN){
+			y++;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT){
+			x--;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+			x++;
+		}
 		
 	}
 

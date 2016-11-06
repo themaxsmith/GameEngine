@@ -6,8 +6,12 @@ import java.util.ArrayList;
 
 public abstract class Scene {
 	private ArrayList<Object> objects = new ArrayList<Object>();
-
+	public String background;
+	public Scene(String back){
+		background = back;
+	}
 	public void render(Screen screen) {
+		renderBackground(screen);
 		synchronized (objects) {
 		for(Object object : objects){
 			object.render(screen);
@@ -30,6 +34,10 @@ public abstract class Scene {
 		synchronized (objects) {
 			objects.remove(object);
 		}
+	}
+	public void renderBackground(Screen screen){
+		screen.render(0, 0, TextureHandler.getTexture(background));
+		
 	}
 	public abstract KeyListener setKeyListener();
 

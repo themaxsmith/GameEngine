@@ -22,7 +22,7 @@ public class Screen {
 				 
 				if (y + yP < height && x+ xP < width && x+ xP > 0 && y + yP > 0){
 					color = text.texture[x+(y*text.width)];
-				pixels[xP+x+((y)*getWidth())] = color;}
+				pixels[xP+x+((yP+y)*getWidth())] = color;}
 			}
 			
 			

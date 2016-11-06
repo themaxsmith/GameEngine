@@ -116,6 +116,7 @@ public abstract class GameEngine extends Canvas implements Runnable {
 		createBufferStrategy(3);
 	 return;
 	 }
+	
 	sceneHand.render(screen);
 	 for(int y = 0; y < screen.getHeight(); y++){
 		 for(int x = 0; x < screen.getWidth(); x++){

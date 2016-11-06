@@ -5,8 +5,9 @@ import java.awt.event.KeyListener;
 
 public class GameScene extends Scene {
 	Player player;
-	public GameScene() {
-		player = new Player("max.jpg", 10, 10);
+	public GameScene(Player player, String background) {
+		super(background);
+		this.player = player;
 		addObject(player);
 	}
 	@Override
