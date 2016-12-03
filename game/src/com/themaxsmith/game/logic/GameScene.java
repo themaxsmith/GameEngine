@@ -2,14 +2,19 @@ package com.themaxsmith.game.logic;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class GameScene extends Scene {
 	Player player;
+
 	public GameScene(Player player, String background) {
 		super(background);
 		this.player = player;
 		addObject(player);
 	}
+
+		
+	
 	@Override
 	public KeyListener setKeyListener() {
 		return  new KeyListener() {

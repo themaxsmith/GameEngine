@@ -108,6 +108,7 @@ public abstract class GameEngine extends Canvas implements Runnable {
 	 sceneHand = new SceneHandler(this);
 
 	 init();
+	 addMouseListener(sceneHand.onClick());
 	}
  public abstract void init();
 	private void render() {
@@ -127,15 +128,19 @@ public abstract class GameEngine extends Canvas implements Runnable {
 		 
 	 }
 	 Graphics g = bs.getDrawGraphics();
+	 
 	 g.drawImage(image, 0, 0, getWidth(),getHeight(),null);
+	
+	 renderGUI(g);
 	g.dispose();
 	 bs.show();
 	}
-	private void tick() {
-	
+	public abstract void tick();
+	public void tickScene(){
+		sceneHand.tick();
 		
 	}
-	
+	public abstract void renderGUI(Graphics g);
 	public static JFrame getFrame() {
 		return frame;
 	}

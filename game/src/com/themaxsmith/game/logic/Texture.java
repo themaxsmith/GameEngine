@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 public class Texture {
 	public BufferedImage rawimage;
 	public int[] texture;
+	public boolean isAnimated=false;
 	public int width, height;
 	public Texture(String file){
 		try{
@@ -30,4 +31,5 @@ public class Texture {
 		
 		
 	}
+	
 }
